@@ -21,7 +21,7 @@ export class LoginComponent {
 
 
   onRegister() {
-    debugger;
+    // debugger;
     const localUser = localStorage.getItem('angular17users');
     if(localUser != null) {
       const users =  JSON.parse(localUser);
@@ -32,22 +32,22 @@ export class LoginComponent {
       users.push(this.signUpObj);
       localStorage.setItem('angular17users', JSON.stringify(users))
     }
-    alert('Registration Success')
+    // alert('Registration Success')
   }
 
   onLogin() {
-    debugger;
+    // debugger;
     const localUsers =  localStorage.getItem('angular17users');
     if(localUsers != null) {
       const users =  JSON.parse(localUsers);
 
       const isUserPresent =  users.find( (user:SignUpModel)=> user.email == this.loginObj.email && user.password == this.loginObj.password);
       if(isUserPresent != undefined) {
-        alert("User Found...");
+        // alert("User Found...");
         localStorage.setItem('loggedUser', JSON.stringify(isUserPresent));
         this.router.navigateByUrl('/contact-list');
       } else {
-        alert("No User Found")
+        alert("Inscrivez vous svp")
       }
     }
   }
