@@ -15,10 +15,28 @@
         </li>
       </ul>
       <form class="d-flex">
-        <span class="text-white">{{loggedUser?.email}} </span> 
+        <span class="text-white">{{loggedUser?.email}} </span>
         <button class="btn btn-primary" type="button" (click)="onLogoff()">LogOff</button>
       </form>
     </div>
-  </nav>
+</nav>
+
+<div class="parent">
+  <div class="container">
+    <h2>Liste des Contacts</h2>
+    <a class="add-contact" [routerLink]="['/add-contact']">Ajouter un Contact</a>
+    <div class="contacts-container">
+      <div class="contact-card" *ngFor="let contact of contacts">
+        <h3>{{ contact.nom }} {{ contact.prenom }}</h3>
+        <p>Email: {{ contact.email }}</p>
+        <p>Téléphone: {{ contact.telephone }}</p>
+        <p>Description: {{ contact.description }}</p>
+        <button>Supprimer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
   <!-- <router-outlet></router-outlet> -->
+
