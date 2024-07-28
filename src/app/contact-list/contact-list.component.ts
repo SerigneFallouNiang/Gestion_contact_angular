@@ -1,42 +1,32 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { Contact } from '../models/contact.model';
 
 @Component({
   selector: 'app-contacts-list',
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './contact-list.component.html',
-  styleUrl: './contact-list.component.css',
+  styleUrls: ['./contact-list.component.css'],
 })
 export class ContactsListComponent implements OnInit {
-  router: any;
-  deleteContact(contactId: string) {
-    const allContacts = JSON.parse(localStorage.getItem('contacts') || '[]');
-    const contactIndex = allContacts.findIndex((contact: any) => contact.id === contactId);
-    if (contactIndex !== -1) {
-      allContacts[contactIndex].etat = 'deleted';
-      localStorage.setItem('contacts', JSON.stringify(allContacts));
-      this.contacts = this.contacts.filter(contact => contact.id !== contactId);
-    }
-  }
-  contacts: any[] = [];
+  contacts: Contact[] = [];
   loggedUser: any;
+
+  constructor(private router: Router) { }
+
+  ngOnInit() {
+    this.loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
+    const allContacts = JSON.parse(localStorage.getItem('contacts') || '[]');
+    this.contacts = allContacts.filter(
+      (contact: Contact) => contact.createdBy === this.loggedUser.email
+    );
+  }
 
 
   onLogoff() {
     localStorage.removeItem('loggedUser');
     this.router.navigateByUrl('/login');
   }
-
-  ngOnInit() {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-    const allContacts = JSON.parse(localStorage.getItem('contacts') || '[]');
-    this.contacts = allContacts.filter(
-      (contact: any) => contact.createdBy === currentUser.email
-    );
-  }
 }
-
-
-

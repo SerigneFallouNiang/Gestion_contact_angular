@@ -13,7 +13,7 @@ import { Contact } from '../models/contact.model';
     RouterModule
   ],
   templateUrl: './contact-form.component.html',
-  styleUrl: './contact-form.component.css'
+  styleUrls: ['./contact-form.component.css']
 })
 export class ContactFormComponent {
   contact: Contact = {
@@ -36,7 +36,7 @@ export class ContactFormComponent {
   ngOnInit(): void {
     this.currentUser = this.getCurrentUser();
     if (!this.currentUser) {
-      this.router.navigate(['/login']); // Rediriger vers la page de connexion si l'utilisateur n'est pas authentifié
+      this.router.navigate(['/login']);
     }
   }
 
@@ -45,26 +45,29 @@ export class ContactFormComponent {
     return user ? JSON.parse(user) : null;
   }
 
-  getContacts(): any[] {
+  getContacts(): Contact[] {
     const contacts = localStorage.getItem('contacts');
     return contacts ? JSON.parse(contacts) : [];
   }
 
-  saveContacts(contacts: any[]): void {
+  saveContacts(contacts: Contact[]): void {
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }
 
   addContact(): void {
-    const contacts = this.getContacts();
-    const newContact = {
-      ...this.contact,
-      id: new Date().getTime().toString(), // Générer un ID unique basé sur l'heure actuelle
-      createdAt: new Date().toISOString(),
-      createdBy: this.currentUser.id
-    };
-    contacts.push(newContact);
-    this.saveContacts(contacts);
-    this.router.navigate(['/contact-list']); // Rediriger vers la liste des contacts après l'ajout
-    console.log(contacts)
+    if (this.currentUser) {
+      const contacts = this.getContacts();
+      const newContact: Contact = {
+        ...this.contact,
+        id: new Date().getTime(), 
+        createdAt: new Date(),
+        createdBy: this.currentUser.email
+      };
+      contacts.push(newContact);
+      this.saveContacts(contacts);
+      this.router.navigate(['/contact-list']);
+    } else {
+      console.error('Utilisateur non connecté');
+    }
   }
 }
