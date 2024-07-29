@@ -1,1 +1,14 @@
-<p>trash works!</p>
+<!-- trash.component.html -->
+<div class="parent">
+    <div class="container">
+      <h2>Contacts Supprimés</h2>
+      <div class="contacts-container">
+        <div class="contact-card" *ngFor="let contact of deletedContacts">
+          <h3>{{ contact.nom }} {{ contact.prenom }}</h3>
+          <p>Téléphone: {{ contact.telephone }}</p>
+          <button (click)="restoreContact(contact.id)">Restaurer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -7,6 +7,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { ContactFormComponent } from './contact-form/contact-form.component';
 import { AuthGuard } from './auth.guard'; // Importez la garde de route
+import { TrashComponent } from './trash/trash.component';
 
 export const routes: Routes = [
   {
@@ -23,6 +24,8 @@ export const routes: Routes = [
     component: ContactsListComponent, canActivate: [AuthGuard]
   },
   { path: 'add-contact', component: ContactFormComponent, canActivate: [AuthGuard] },
+
+  { path: 'trash', component: TrashComponent },
 ];
 
 @NgModule({

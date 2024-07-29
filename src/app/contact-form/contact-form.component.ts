@@ -57,7 +57,8 @@ export class ContactFormComponent {
         ...this.contactForm.value,
         id: new Date().getTime().toString(),
         createdAt: new Date().toISOString(),
-        createdBy: this.currentUser.email
+        createdBy: this.currentUser.email,
+         isDeleted: false // Initialiser isDeleted à false
       };
       contacts.push(newContact);
       this.saveContacts(contacts);

@@ -1,4 +1,5 @@
 export interface Contact {
+  isDeleted: boolean;
   id: number;
   nom: string;
   prenom: string;

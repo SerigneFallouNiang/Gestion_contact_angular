@@ -18,15 +18,38 @@ export class ContactsListComponent implements OnInit {
 
   ngOnInit() {
     this.loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
-    const allContacts = JSON.parse(localStorage.getItem('contacts') || '[]');
-    this.contacts = allContacts.filter(
-      (contact: Contact) => contact.createdBy === this.loggedUser.email
-    );
+    this.loadContacts();
   }
 
+  loadContacts() {
+    const allContacts = JSON.parse(localStorage.getItem('contacts') || '[]');
+    this.contacts = allContacts.filter(
+      (contact: Contact) => contact.createdBy === this.loggedUser.email && !contact.isDeleted
+    );
+  }
 
   onLogoff() {
     localStorage.removeItem('loggedUser');
     this.router.navigateByUrl('/login');
+  }
+
+  removeContact(contactId: number): void {
+    const contacts = JSON.parse(localStorage.getItem('contacts') || '[]');
+    const index = contacts.findIndex((contact: Contact) => contact.id === contactId);
+    if (index !== -1) {
+      contacts[index].isDeleted = true;
+      localStorage.setItem('contacts', JSON.stringify(contacts));
+      this.loadContacts();
+    }
+  }
+
+  restoreContact(contactId: number): void {
+    const contacts = JSON.parse(localStorage.getItem('contacts') || '[]');
+    const index = contacts.findIndex((contact: Contact) => contact.id === contactId);
+    if (index !== -1) {
+      contacts[index].isDeleted = false;
+      localStorage.setItem('contacts', JSON.stringify(contacts));
+      this.loadContacts();
+    }
   }
 }
