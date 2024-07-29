@@ -13,26 +13,36 @@ import { Router } from '@angular/router';
 export class LoginComponent {
 
   isSignDivVisiable: boolean  = true;
+  isSignUpSuccess: boolean = false; // Ajouté pour contrôler l'affichage du message de succès
+
 
   signUpObj: SignUpModel  = new SignUpModel();
   loginObj: LoginModel  = new LoginModel();
 
   constructor(private router: Router){}
 
-
   onRegister() {
     // debugger;
-    const localUser = localStorage.getItem('angular17users');
+        // Récupère le formulaire et les utilisateurs stockés dans le localStorage
+        const form = document.querySelector('#formRegister');
+        const localUser = localStorage.getItem('angular17users');
+
+   // Vérifie si des utilisateurs existent déjà dans le localStorage
     if(localUser != null) {
       const users =  JSON.parse(localUser);
       users.push(this.signUpObj);
       localStorage.setItem('angular17users', JSON.stringify(users))
+    
+  
     } else {
       const users = [];
       users.push(this.signUpObj);
       localStorage.setItem('angular17users', JSON.stringify(users))
     }
-    // alert('Registration Success')
+
+   // Mettre à jour la propriété pour afficher le message de succès
+   this.isSignUpSuccess = true;
+   this.isSignDivVisiable = false; // Masquer le formulaire après l'inscription
   }
 
   onLogin() {
