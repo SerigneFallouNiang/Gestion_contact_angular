@@ -1,25 +1,32 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { Contact } from '../models/contact.model';
 
 @Component({
-  selector: 'app-contact-list',
+  selector: 'app-contacts-list',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, RouterModule],
   templateUrl: './contact-list.component.html',
-  styleUrl: './contact-list.component.css'
+  styleUrls: ['./contact-list.component.css'],
 })
-export class ContactListComponent {
+export class ContactsListComponent implements OnInit {
+  contacts: Contact[] = [];
   loggedUser: any;
-  constructor(private router: Router) {
-    const localUser = localStorage.getItem('loggedUser');
-    if(localUser != null) {
-      this.loggedUser = JSON.parse(localUser);
-    }
+
+  constructor(private router: Router) { }
+
+  ngOnInit() {
+    this.loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
+    const allContacts = JSON.parse(localStorage.getItem('contacts') || '[]');
+    this.contacts = allContacts.filter(
+      (contact: Contact) => contact.createdBy === this.loggedUser.email
+    );
   }
+
 
   onLogoff() {
     localStorage.removeItem('loggedUser');
-    this.router.navigateByUrl('/login')
+    this.router.navigateByUrl('/login');
   }
 }
