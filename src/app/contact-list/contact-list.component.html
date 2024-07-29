@@ -23,10 +23,13 @@
 
 <div class="parent">
   <div class="container">
+    <!-- Champ de recherche -->
+    <input type="text" [(ngModel)]="searchQuery" placeholder="Rechercher par nom, téléphone ou email" class="form-control mb-3">
     <h2>Liste des Contacts</h2>
     <a class="add-contact" [routerLink]="['/add-contact']">Ajouter un Contact</a>
+
     <div class="contacts-container">
-      <div class="contact-card" *ngFor="let contact of contacts">
+      <div class="contact-card" *ngFor="let contact of filteredContacts()">
         <h3>{{ contact.nom }} {{ contact.prenom }}</h3>
         <!-- <p>Email: {{ contact.email }}</p> -->
         <p>Téléphone: {{ contact.telephone }}</p>
