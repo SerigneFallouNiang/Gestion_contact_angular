@@ -46,4 +46,8 @@ export class ContactsListComponent implements OnInit {
     localStorage.removeItem('loggedUser');
     this.router.navigateByUrl('/login');
   }
+
+  editContact(id: number) {
+    this.router.navigate(['/edit-contact', id]);
+  }
 }
