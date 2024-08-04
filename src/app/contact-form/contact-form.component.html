@@ -1,53 +1,122 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formulaire Contact</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+      padding: 40px;
+      width: 400px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+    input, textarea {
+      margin-bottom: 15px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+    .error-message {
+      color: #ff3860;
+      font-size: 12px;
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+    }
+    button[type="submit"]:hover {
+      background-color: #45a049;
+    }
+    button[type="button"] {
+      background-color: #f44336;
+      color: white;
+    }
+    button[type="button"]:hover {
+      background-color: #da190b;
+    }
+    button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+  </style>
 </head>
 <body>
+  <div class="container">
+    <form [formGroup]="contactForm" (ngSubmit)="addOrUpdateContact()">
+      <h1>{{ isEditing ? 'Modifier un Contact' : 'Ajouter un Contact' }}</h1>
 
-  <div class="parent">
-    <div class="container" id="container">
-        <div class="form-container">
-            <form [formGroup]="contactForm" (ngSubmit)="addOrUpdateContact()">
-                <h1>{{ isEditing ? 'Modifier un Contact' : 'Ajouter un Nouveau Contact' }}</h1>
+      <input type="text" formControlName="nom" placeholder="Nom">
+      <div *ngIf="contactForm.get('nom')?.invalid && (contactForm.get('nom')?.touched || contactForm.get('nom')?.dirty)" class="error-message">
+        <div *ngIf="contactForm.get('nom')?.errors?.['required']">Le nom est requis.</div>
+        <div *ngIf="contactForm.get('nom')?.errors?.['minlength']">Le nom doit contenir au moins 2 caractères.</div>
+      </div>
 
-                <span>Remplissez les informations ci-dessous</span>
+      <input type="text" formControlName="prenom" placeholder="Prénom">
+      <div *ngIf="contactForm.get('prenom')?.invalid && (contactForm.get('prenom')?.touched || contactForm.get('prenom')?.dirty)" class="error-message">
+        <div *ngIf="contactForm.get('prenom')?.errors?.['required']">Le prénom est requis.</div>
+        <div *ngIf="contactForm.get('prenom')?.errors?.['minlength']">Le prénom doit contenir au moins 2 caractères.</div>
+      </div>
 
-                <input type="text" formControlName="nom" placeholder="Nom">
-                <div *ngIf="contactForm.get('nom')?.invalid && (contactForm.get('nom')?.touched || contactForm.get('nom')?.dirty)">
-                  <div *ngIf="contactForm.get('nom')?.errors?.['required']" class="error-message">Le nom est requis.</div>
-                  <div *ngIf="contactForm.get('nom')?.errors?.['minlength']" class="error-message">Le nom doit contenir au moins 2 caractères.</div>
-                </div>
+      <input type="email" formControlName="email" placeholder="Email">
+      <div *ngIf="contactForm.get('email')?.invalid && (contactForm.get('email')?.touched || contactForm.get('email')?.dirty)" class="error-message">
+        <div *ngIf="contactForm.get('email')?.errors?.['required']">L'email est requis.</div>
+        <div *ngIf="contactForm.get('email')?.errors?.['email']">L'email doit être valide.</div>
+      </div>
 
-                <input type="text" formControlName="prenom" placeholder="Prénom">
-                <div *ngIf="contactForm.get('prenom')?.invalid && (contactForm.get('prenom')?.touched || contactForm.get('prenom')?.dirty)">
-                  <div *ngIf="contactForm.get('prenom')?.errors?.['required']" class="error-message">Le prénom est requis.</div>
-                  <div *ngIf="contactForm.get('prenom')?.errors?.['minlength']" class="error-message">Le prénom doit contenir au moins 2 caractères.</div>
-                </div>
+      <input type="text" formControlName="telephone" placeholder="Téléphone">
+      <div *ngIf="contactForm.get('telephone')?.invalid && (contactForm.get('telephone')?.touched || contactForm.get('telephone')?.dirty)" class="error-message">
+        <div *ngIf="contactForm.get('telephone')?.errors?.['required']">Le numéro de téléphone est requis.</div>
+        <div *ngIf="contactForm.get('telephone')?.errors?.['pattern']">Le numéro de téléphone doit contenir exactement 9 chiffres.</div>
+      </div>
 
-                <input type="email" formControlName="email" placeholder="Email">
-                <div *ngIf="contactForm.get('email')?.invalid && (contactForm.get('email')?.touched || contactForm.get('email')?.dirty)">
-                  <div *ngIf="contactForm.get('email')?.errors?.['required']" class="error-message">L'email est requis.</div>
-                  <div *ngIf="contactForm.get('email')?.errors?.['email']" class="error-message">L'email doit être valide.</div>
-                </div>
+      <textarea formControlName="description" placeholder="Description"></textarea>
 
-                <input type="text" formControlName="telephone" placeholder="Téléphone">
-                <div *ngIf="contactForm.get('telephone')?.invalid && (contactForm.get('telephone')?.touched || contactForm.get('telephone')?.dirty)">
-                  <div *ngIf="contactForm.get('telephone')?.errors?.['required']" class="error-message">Le numéro de téléphone est requis.</div>
-                  <div *ngIf="contactForm.get('telephone')?.errors?.['pattern']" class="error-message">Le numéro de téléphone doit contenir exactement 9 chiffres.</div>
-                </div>
-
-                <textarea formControlName="description" placeholder="Description"></textarea>
-
-                <button type="submit" [disabled]="contactForm.invalid">{{ isEditing ? 'Enregistrer les Modifications' : 'Ajouter' }}</button>
-            </form>
-        </div>
-    </div>
+      <div class="button-group">
+        <button type="submit" [disabled]="contactForm.invalid">{{ isEditing ? 'Enregistrer' : 'Ajouter' }}</button>
+        <button type="button" (click)="cancel()">Annuler</button>
+      </div>
+    </form>
   </div>
-
 </body>
 </html>

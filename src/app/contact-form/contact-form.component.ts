@@ -100,4 +100,13 @@ export class ContactFormComponent implements OnInit {
     this.saveContacts(contacts);
     this.router.navigate(['/contact-list']);
   }
+
+
+  cancel() {
+    // Réinitialiser le formulaire
+    this.contactForm.reset();
+    
+    // Naviguer vers la liste des contacts
+    this.router.navigate(['/contact-list']);
+  }
 }
