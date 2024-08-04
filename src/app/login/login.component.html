@@ -3,13 +3,7 @@
     <div class="container" [ngClass]="isSignDivVisiable ? 'active' :'' " id="container">
         <div class="form-container sign-up" >
             <form>
-                <h1>Créer un compte</h1>
-                <div class="social-icons">
-                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
-                </div>
+                <h2>Créer un compte</h2>
                 <span>ou utilisez votre email pour vous inscrire</span>
                 <input type="text" name="name" [(ngModel)]="signUpObj.name" placeholder="Nom">
                 <input type="email" name="email" [(ngModel)]="signUpObj.email" placeholder="Email">
@@ -19,13 +13,8 @@
         </div>
         <div class="form-container sign-in" >
             <form>
-                <h1>Se connecter</h1>
-                <div class="social-icons">
-                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
-                </div>
+                <h2>Se connecter</h2>
+              
                 <span>ou utilisez votre mot de passe de messagerie</span>
                 <input type="email" name="email" [(ngModel)]="loginObj.email" placeholder="Email">
                 <input type="password" name="password"   [(ngModel)]="loginObj.password" placeholder="Mot de passe">
