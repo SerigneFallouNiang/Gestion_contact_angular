@@ -21,11 +21,23 @@ export const routes: Routes = [
   },
   {
     path: 'contact-list',
-    component: ContactsListComponent, canActivate: [AuthGuard]
+    component: ContactsListComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'add-contact',
+    component: ContactFormComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'edit-contact/:id',
+    component: ContactFormComponent,
+    canActivate: [AuthGuard],
   },
   { path: 'add-contact', component: ContactFormComponent, canActivate: [AuthGuard] },
 
   { path: 'trash', component: TrashComponent },
+
 ];
 
 @NgModule({

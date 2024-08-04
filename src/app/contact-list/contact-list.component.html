@@ -23,16 +23,22 @@
 
 <div class="parent">
   <div class="container">
+    <!-- Champ de recherche -->
+    <input type="text" [(ngModel)]="searchQuery" placeholder="Rechercher par nom, téléphone ou email" class="form-control mb-3">
     <h2>Liste des Contacts</h2>
     <a class="add-contact" [routerLink]="['/add-contact']">Ajouter un Contact</a>
+
     <div class="contacts-container">
-      <div class="contact-card" *ngFor="let contact of contacts">
+      <div class="contact-card" *ngFor="let contact of filteredContacts()">
         <h3>{{ contact.nom }} {{ contact.prenom }}</h3>
         <!-- <p>Email: {{ contact.email }}</p> -->
         <p>Téléphone: {{ contact.telephone }}</p>
         <!-- <p>Description: {{ contact.description }}</p> -->
         <button (click)="removeContact(contact.id)">Supprimer</button>
         <button (click)="restoreContact(contact.id)" *ngIf="contact.isDeleted">Restaurer</button>
+
+        <button (click)="editContact(contact.id)">Modifier</button>
+        <!-- <button>Supprimer</button> -->
       </div>
     </div>
   </div>

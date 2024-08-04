@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { Contact } from '../models/contact.model';
 
 @Component({
@@ -15,11 +15,17 @@ import { Contact } from '../models/contact.model';
   templateUrl: './contact-form.component.html',
   styleUrls: ['./contact-form.component.css']
 })
-export class ContactFormComponent {
+export class ContactFormComponent implements OnInit {
   contactForm: FormGroup;
   currentUser: any = null;
+  isEditing: boolean = false;
+  contact: Contact | undefined;
 
-  constructor(private router: Router, private fb: FormBuilder) {
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private route: ActivatedRoute
+  ) {
     this.contactForm = this.fb.group({
       nom: ['', [Validators.required, Validators.minLength(2)]],
       prenom: ['', [Validators.required, Validators.minLength(2)]],
@@ -33,6 +39,18 @@ export class ContactFormComponent {
     this.currentUser = this.getCurrentUser();
     if (!this.currentUser) {
       this.router.navigate(['/login']);
+    }
+    this.checkIfEditing();
+  }
+
+  checkIfEditing(): void {
+    const contactId = this.route.snapshot.paramMap.get('id');
+    if (contactId) {
+      this.isEditing = true;
+      this.contact = this.getContactById(+contactId);
+      if (this.contact) {
+        this.contactForm.patchValue(this.contact);
+      }
     }
   }
 
@@ -50,21 +68,36 @@ export class ContactFormComponent {
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }
 
-  addContact(): void {
-    if (this.contactForm.valid && this.currentUser) {
-      const contacts = this.getContacts();
+  getContactById(id: number): Contact | undefined {
+    const contacts = this.getContacts();
+    return contacts.find(c => c.id === id);
+  }
+
+  addOrUpdateContact(): void {
+    const contacts = this.getContacts();
+    const contactData = this.contactForm.value;
+
+    if (this.isEditing && this.contact) {
+      const index = contacts.findIndex(c => c.id === this.contact?.id);
+      if (index !== -1) {
+        contacts[index] = {
+          ...this.contact,
+          ...contactData,
+          updatedAt: new Date(),
+          updatedBy: this.currentUser.email
+        };
+      }
+    } else {
       const newContact: Contact = {
-        ...this.contactForm.value,
-        id: new Date().getTime().toString(),
-        createdAt: new Date().toISOString(),
-        createdBy: this.currentUser.email,
-         isDeleted: false // Initialiser isDeleted à false
+        ...contactData,
+        id: new Date().getTime(),
+        createdAt: new Date(),
+        createdBy: this.currentUser.email
       };
       contacts.push(newContact);
-      this.saveContacts(contacts);
-      this.router.navigate(['/contact-list']);
-    } else {
-      console.error('Le formulaire est invalide ou utilisateur non connecté');
     }
+
+    this.saveContacts(contacts);
+    this.router.navigate(['/contact-list']);
   }
 }
