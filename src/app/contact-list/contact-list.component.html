@@ -1,49 +1,59 @@
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-    <div class="container-fluid">
-      <ul class="navbar-nav">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" href="#">Contact Manager</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link active" href="#">Active</a>
+          <a class="nav-link active" href="#">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <a class="nav-link" href="#">About</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Disabled</a>
+          <a class="nav-link" href="#">Services</a>
         </li>
       </ul>
-      <form class="d-flex">
-        <span class="text-white">{{loggedUser?.email}} </span>
-        <button class="btn btn-primary" type="button" (click)="onLogoff()">LogOff</button>
-      </form>
+      <div class="d-flex align-items-center">
+        <span class="me-3">{{loggedUser?.email}}</span>
+        <button class="btn btn-outline-primary" type="button" (click)="onLogoff()">Déconnexion</button>
+      </div>
     </div>
+  </div>
 </nav>
 
-<div class="parent">
-  <div class="container">
-    <!-- Champ de recherche -->
-    <input type="text" [(ngModel)]="searchQuery" placeholder="Rechercher par nom, téléphone ou email" class="form-control mb-3">
-    <h2>Liste des Contacts</h2>
-    <a class="add-contact" [routerLink]="['/add-contact']">Ajouter un Contact</a>
-
-    <div class="contacts-container">
-      <div class="contact-card" *ngFor="let contact of filteredContacts()">
-        <h3>{{ contact.nom }} {{ contact.prenom }}</h3>
-        <!-- <p>Email: {{ contact.email }}</p> -->
-        <p>Téléphone: {{ contact.telephone }}</p>
-        <!-- <p>Description: {{ contact.description }}</p> -->
-        <button (click)="removeContact(contact.id)">Supprimer</button>
-        <button (click)="restoreContact(contact.id)" *ngIf="contact.isDeleted">Restaurer</button>
-
-        <button (click)="editContact(contact.id)">Modifier</button>
-        <!-- <button>Supprimer</button> -->
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title mb-4">Recherche Contacts</h5>
+          <input type="text" [(ngModel)]="searchQuery" placeholder="Chercher par nom, numéro, ou email" class="form-control mb-3">
+          <a [routerLink]="['/add-contact']" class="btn btn-primary w-100">Ajouter une nouvelle Contact</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <h2 class="mb-4">Contact List</h2>
+      <div class="row row-cols-1 row-cols-md-2 g-4">
+        <div class="col" *ngFor="let contact of filteredContacts()">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">{{ contact.nom }} {{ contact.prenom }}</h5>
+              <p class="card-text"><i class="bi bi-telephone"></i> {{ contact.telephone }}</p>
+              <p class="card-text"><i class="bi bi-envelope"></i> {{ contact.email }}</p>
+              <p class="card-text"><small class="text-muted">{{ contact.description }}</small></p>
+            </div>
+            <div class="card-footer bg-transparent border-0">
+              <button class="btn btn-sm btn-outline-primary me-2" (click)="editContact(contact.id)">Modifier</button>
+              <button class="btn btn-sm btn-outline-danger me-2" (click)="removeContact(contact.id)">Supprimer</button>
+              <button class="btn btn-sm btn-outline-success" *ngIf="contact.isDeleted" (click)="restoreContact(contact.id)">Restaurer</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-
-  <!-- <router-outlet></router-outlet> -->
-
