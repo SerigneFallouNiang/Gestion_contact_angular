@@ -3,11 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { Contact } from '../models/contact.model';
 import { FormsModule } from '@angular/forms';
+import { ContactDetailComponent } from '../contact-detail/contact-detail.component';
 
 @Component({
   selector: 'app-contacts-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule,ContactDetailComponent],
   templateUrl: './contact-list.component.html',
   styleUrls: ['./contact-list.component.css'],
 })
@@ -94,4 +95,11 @@ export class ContactsListComponent implements OnInit {
   editContact(id: number) {
     this.router.navigate(['/edit-contact', id]);
   }
+
+
+  contactSelectionne: Contact | null = null;
+
+  selectionnerContact(contact: Contact) {
+    this.contactSelectionne = contact;
+}
 }

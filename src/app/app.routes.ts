@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { ContactFormComponent } from './contact-form/contact-form.component';
 import { AuthGuard } from './auth.guard'; // Importez la garde de route
 import { TrashComponent } from './trash/trash.component';
+import { ContactDetailComponent } from './contact-detail/contact-detail.component';
 
 export const routes: Routes = [
   {
@@ -36,7 +37,7 @@ export const routes: Routes = [
   },
   { path: 'add-contact', component: ContactFormComponent, canActivate: [AuthGuard] },
 
-  { path: 'trash', component: TrashComponent },
+  { path: 'trash', component: TrashComponent }
 
 ];
 

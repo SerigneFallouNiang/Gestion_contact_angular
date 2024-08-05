@@ -27,6 +27,7 @@
           <h5 class="card-title mb-4">Recherche Contacts</h5>
           <input type="text" [(ngModel)]="searchQuery" placeholder="Chercher par nom, numéro, ou email" class="form-control mb-3">
           <a [routerLink]="['/add-contact']" class="btn btn-primary w-100">Ajouter une nouvelle Contact</a>
+          <app-contact-detail [contact]="contactSelectionne"></app-contact-detail>
         </div>
       </div>
     </div>
@@ -37,18 +38,18 @@
           <div class="card h-100 shadow-sm">
             <div class="card-body">
               <h5 class="card-title">{{ contact.nom }} {{ contact.prenom }}</h5>
-              <p class="card-text"><i class="bi bi-telephone"></i> {{ contact.telephone }}</p>
-              <p class="card-text"><i class="bi bi-envelope"></i> {{ contact.email }}</p>
-              <p class="card-text"><small class="text-muted">{{ contact.description }}</small></p>
+              <p class="card-text"><i class="bi bi-telephone"></i>Tél: {{ contact.telephone }}</p>
             </div>
             <div class="card-footer bg-transparent border-0">
+              <button class="btn btn-sm btn-outline-info me-2" (click)=" selectionnerContact(contact)">Détail</button>
               <button class="btn btn-sm btn-outline-primary me-2" (click)="editContact(contact.id)">Modifier</button>
               <button class="btn btn-sm btn-outline-danger me-2" (click)="removeContact(contact.id)">Supprimer</button>
               <button class="btn btn-sm btn-outline-success" *ngIf="contact.isDeleted" (click)="restoreContact(contact.id)">Restaurer</button>
             </div>
+           
+          </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>

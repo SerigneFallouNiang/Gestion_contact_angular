@@ -1,1 +1,9 @@
-<p>contact-detail works!</p>
+<div *ngIf="contact" class="card mt-5">
+    <div class="card-body">
+      <h5 class="card-title">{{ contact.prenom }} {{ contact.nom }}</h5>
+      <p class="card-text">Téléphone : {{ contact.telephone }}</p>
+      <p class="card-text">Email : {{ contact.email }}</p>
+      <p class="card-text">{{ contact.description }}</p>
+    </div>
+  </div>
+  <p *ngIf="!contact">Sélectionnez une contact pour voir les détails.</p>
