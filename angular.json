@@ -26,7 +26,8 @@
             ],
             "styles": [
               "src/styles.css"
-            ],
+            ]
+            ,
             "scripts": []
           },
           "configurations": {
@@ -34,13 +35,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "600kb",
+                  "maximumWarning": "500kb",
                   "maximumError": "1mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "15kb",
-                  "maximumError": "15kb"
+                  "maximumWarning": "11kb",
+                  "maximumError": "11kb"
                 }
               ],
               "outputHashing": "all"

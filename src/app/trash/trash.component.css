@@ -1,0 +1,159 @@
+/* Styles généraux */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+  }
+  
+  .container {
+    width: 100%;
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+  
+  /* Navbar */
+  .navbar {
+    background-color: #f8f9fa;
+    padding: 10px 0;
+  }
+  
+  .navbar-brand {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #000;
+    text-decoration: none;
+  }
+  
+  .navbar-toggler {
+    display: none;
+  }
+  
+  .navbar-collapse {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .navbar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .nav-item {
+    display: inline-block;
+    margin-right: 15px;
+  }
+  
+  .nav-link {
+    color: #000;
+    text-decoration: none;
+  }
+  
+  .user-info {
+    font-size: 0.9rem;
+  }
+  
+  /* Container de la corbeille */
+  .trash-container {
+    margin-top: 40px;
+  }
+  
+  /* Carte */
+  .card {
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  .card-title {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+  }
+  
+  /* Grille de contacts */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .contact-card {
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+  }
+  
+  .contact-card .card-body {
+    padding: 15px;
+  }
+  
+  .contact-card .card-title {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+  
+  .contact-card .card-text {
+    font-size: 0.9rem;
+  }
+  
+  .contact-card .card-footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+    padding: 10px;
+  }
+  
+  /* Boutons */
+  .btn-restore {
+    width: 100%;
+    padding: 8px 12px;
+    background-color: #fff;
+    color: #007bff;
+    border: 1px solid #007bff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .btn-restore:hover {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  /* Icônes */
+  .icon-telephone::before {
+    content: "\260E";
+    margin-right: 5px;
+  }
+  
+  .icon-restore::before {
+    content: "\21BA";
+    margin-right: 5px;
+  }
+  
+  /* État vide */
+  .empty-state {
+    text-align: center;
+    padding: 40px 0;
+    color: #6c757d;
+  }
+  
+  .icon-trash::before {
+    content: "\1F5D1";
+    font-size: 4rem;
+    display: block;
+    margin-bottom: 15px;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
